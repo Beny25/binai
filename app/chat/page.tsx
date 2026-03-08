@@ -1,13 +1,11 @@
 "use client"
-
 import { useState, useRef, useEffect } from "react"
 
 export default function ChatPage() {
 
-  const [message,setMessage] = useState("")
-  const [chat,setChat] = useState<{role:"user"|"ai",text:string}[]>([])
-  const [loading,setLoading] = useState(false)
-
+  const [message, setMessage] = useState("")
+  const [chat, setChat] = useState<{role:"user"|"ai", text:string}[]>([])
+  const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
@@ -18,7 +16,7 @@ export default function ChatPage() {
     const msg = text || message
     if(!msg) return
 
-    setChat(prev=>[...prev,{role:"user",text:msg}])
+    setChat(prev=>[...prev,{role:"user", text:msg}])
     setMessage("")
     setLoading(true)
 
@@ -29,10 +27,10 @@ export default function ChatPage() {
         body: JSON.stringify({message:msg})
       })
       const data = await res.json()
-      setChat(prev=>[...prev,{role:"ai",text:data.reply}])
+      setChat(prev=>[...prev,{role:"ai", text:data.reply}])
     } catch(err){
       console.error(err)
-      setChat(prev=>[...prev,{role:"ai",text:"❌ Maaf, ada error saat memproses pesanmu."}])
+      setChat(prev=>[...prev,{role:"ai", text:"❌ Maaf, AI sedang tidak tersedia."}])
     } finally {
       setLoading(false)
     }
@@ -44,7 +42,7 @@ export default function ChatPage() {
       {/* Header */}
       <div className="p-4 border-b border-gray-800 flex justify-between items-center">
         <h1 className="font-bold text-lg">🤖 BinAI Assistant</h1>
-        <a href="https://t.me/binai_assistant_bot" target="_blank" className="text-sm bg-blue-600 px-3 py-1 rounded">Telegram Bot</a>
+        <a href="https://t.me/binai_assistant_bot" target="_blank" className="text-sm bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 transition">Telegram Bot</a>
       </div>
 
       {/* Chat area */}
@@ -62,9 +60,9 @@ export default function ChatPage() {
 
       {/* Quick buttons */}
       <div className="px-6 pb-2 flex gap-2 flex-wrap text-sm">
-        <button onClick={()=>sendMessage("BTC price today")} className="bg-gray-800 px-3 py-1 rounded">BTC price</button>
-        <button onClick={()=>sendMessage("ETH price today")} className="bg-gray-800 px-3 py-1 rounded">ETH price</button>
-        <button onClick={()=>sendMessage("Top crypto today")} className="bg-gray-800 px-3 py-1 rounded">Top crypto</button>
+        <button onClick={()=>sendMessage("BTC price today")} className="bg-gray-800 px-3 py-1 rounded hover:bg-gray-700 transition">BTC price</button>
+        <button onClick={()=>sendMessage("ETH price today")} className="bg-gray-800 px-3 py-1 rounded hover:bg-gray-700 transition">ETH price</button>
+        <button onClick={()=>sendMessage("Top crypto today")} className="bg-gray-800 px-3 py-1 rounded hover:bg-gray-700 transition">Top crypto</button>
       </div>
 
       {/* Input */}
@@ -73,12 +71,12 @@ export default function ChatPage() {
           value={message}
           onChange={(e)=>setMessage(e.target.value)}
           onKeyDown={(e)=>{ if(e.key==="Enter") sendMessage() }}
-          placeholder="Tanya crypto..."
+          placeholder="Tanya crypto atau AI..."
           className="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 outline-none"
         />
-        <button onClick={()=>sendMessage()} className="bg-blue-600 px-4 py-2 rounded-lg">Send</button>
+        <button onClick={()=>sendMessage()} className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">Send</button>
       </div>
 
     </div>
   )
-}
+                              }
