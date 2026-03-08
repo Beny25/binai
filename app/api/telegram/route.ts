@@ -1,5 +1,5 @@
 // app/api/telegram/route.ts
-import { runAIAgent } from "@/lib/ai"
+import { askAI } from "@/lib/ai"
 
 export async function POST(req: Request) {
   try {
@@ -9,8 +9,7 @@ export async function POST(req: Request) {
 
     if (!chatId || !message) return new Response("ok") // no-op
 
-    const reply = await runAIAgent(message)
-
+    const reply = await askAI(message)
     // kirim balik ke Telegram
     await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: "POST",
