@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 BinAI AI Crypto Assistant
 
-## Getting Started
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)  
+[![Vercel](https://img.shields.io/badge/deploy-vercel-blue)](https://vercel.com/new)  
+[![Telegram](https://img.shields.io/badge/chat-Telegram-blue?logo=telegram)](https://t.me/binai_assistant_bot)  
 
-First, run the development server:
+**BinAI** adalah **AI Crypto Assistant Platform** yang menggabungkan data live crypto dengan kemampuan AI untuk ngobrol, memberikan rekomendasi, dan analisis pasar.  
+Platform ini **siap dijalankan di web** maupun melalui **Telegram Bot**.  
 
+---
+
+## ⚡ Fitur Utama
+
+- 📈 **Crypto Live Dashboard**: BTC, ETH, BNB, dan Top crypto live update  
+- 🤖 **AI Chatbot**: Bisa ngobrol via Telegram atau web  
+- 💬 **Hugging Face / OpenAI GPT fallback**: AI fallback untuk teks bebas  
+- 🎨 **UI Modern**: Next.js + Tailwind, responsif & user-friendly  
+- 🚀 **Deploy Cepat**: Siap deploy ke Vercel  
+
+---
+
+## 🛠️ Quick Start
+
+### Clone Repository
 ```bash
+git clone https://github.com/beny25/binai.git
+cd binai
+
+Install Dependencies
+
+npm install
+
+Setup Environment
+
+Buat file .env.local:
+
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+OPENAI_API_KEY=your_openai_api_key   # Optional, kalau mau pakai OpenAI GPT
+HUGGINGFACE_API_KEY=your_hf_api_key # Optional, fallback gratis
+
+Run Development Server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Deploy ke Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Hubungkan repo GitHub ke Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+2. Set Environment Variables di Vercel sesuai .env.local
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Deploy → bot & dashboard langsung online
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+📱 Telegram Bot
+
+Username: @binai_assistant_bot
+
+Perintah:
+
+/start → Memulai bot
+
+BTC, ETH, Top crypto → Dapat harga live
+
+Teks bebas → AI fallback reply (Hugging Face / OpenAI)
+
+
+
+
+---
+
+🔧 Struktur Project
+
+binai/
+├─ app/
+│  ├─ api/
+│  │  ├─ telegram/route.ts
+│  │  └─ ai/route.ts
+│  ├─ dashboard/page.tsx
+│  └─ page.tsx
+├─ components/
+│  └─ CryptoCard.tsx
+├─ lib/
+│  └─ ai.ts
+├─ services/
+│  └─ commandRouter.ts
+├─ public/
+│  └─ logo.svg
+├─ .env.local
+├─ package.json
+└─ README.md
+
+
+---
+
+🎨 Screenshots / Preview
+
+Web Dashboard
+
+
+Telegram Bot Chat
+
+
+
+---
+
+💡 Tips
+
+Free AI fallback: pakai Hugging Face gratis tanpa kartu kredit
+
+OpenAI GPT-3.5 fallback: butuh API key aktif + billing
+
+Crypto data update tiap 10 detik atau manual refresh tombol
+
+
+
+---
+
+📄 License
+
+MIT License © 2026 Beny Hartanto
+
+
+---
+
+> Build your crypto AI assistant today with BinAI! 
