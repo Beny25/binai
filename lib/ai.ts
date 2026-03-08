@@ -1,4 +1,5 @@
-import fetch from "node-fetch" // optional, tergantung env
+// lib/ai.ts
+
 // OpenAI helper
 export async function askAI(prompt: string) {
   if (!process.env.OPENAI_API_KEY) throw new Error("Missing OpenAI API Key")
@@ -67,7 +68,7 @@ export async function runAIAgent(message: string) {
           )
           .join("\n")
     } else {
-      // fallback ke OpenAI
+      // fallback AI
       reply = await askAI(message)
     }
   } catch (err) {
@@ -76,4 +77,4 @@ export async function runAIAgent(message: string) {
   }
 
   return reply
-        }
+}
