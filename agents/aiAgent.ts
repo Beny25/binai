@@ -1,4 +1,4 @@
-import { askAI } from "@/lib/ai"
+import { askAI } from "@/lib/openai"
 
 export async function runAIAgent(prompt: string) {
 
