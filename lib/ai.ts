@@ -1,31 +1,42 @@
 // lib/ai.ts
 
-// OpenAI helper
-export async function askAI(prompt: string) {
-  if (!process.env.OPENAI_API_KEY) throw new Error("Missing OpenAI API Key")
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 250,
-    }),
-  })
-  const data = await res.json()
-  return data?.choices?.[0]?.message?.content || "❌ AI tidak merespon"
-}
-
-// CoinGecko tipe
 interface Coin {
   id: string
   symbol: string
   name: string
   current_price: number
   price_change_percentage_24h?: number
+}
+
+// OpenAI helper
+export async function askAI(prompt: string) {
+  if (!process.env.OPENAI_API_KEY) throw new Error("Missing OpenAI API Key")
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 250,
+      }),
+    })
+
+    if (!res.ok) {
+      console.error("OpenAI error:", await res.text())
+      return "❌ AI sedang sibuk, coba lagi nanti."
+    }
+
+    const data = await res.json()
+    return data?.choices?.[0]?.message?.content || "❌ AI tidak merespon"
+  } catch (err) {
+    console.error("askAI error:", err)
+    return "❌ AI tidak merespon"
+  }
 }
 
 // Main AI agent
@@ -60,12 +71,12 @@ export async function runAIAgent(message: string) {
       reply =
         "🔥 Top 5 Crypto:\n" +
         data
-          .map(
-            (c: Coin, i: number) =>
-              `${i + 1}. ${c.name} (${c.symbol.toUpperCase()}): $${c.current_price} (${c.price_change_percentage_24h?.toFixed(
-                2
-              )}%)`
-          )
+          .map((c: Coin, i: number) => {
+            const price = c.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            const change = c.price_change_percentage_24h?.toFixed(2)
+            const emoji = change && parseFloat(change) >= 0 ? "📈" : "📉"
+            return `${i + 1}. ${c.name} (${c.symbol.toUpperCase()}): $${price} (${change}% ${emoji})`
+          })
           .join("\n")
     } else {
       // fallback AI
