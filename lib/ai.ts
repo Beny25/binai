@@ -5,11 +5,9 @@ export async function askAI(prompt: string): Promise<string> {
     return "❌ HF_API_KEY tidak ditemukan"
   }
 
-  const MODEL = "HuggingFaceH4/zephyr-7b-beta"
-
   try {
     const res = await fetch(
-      `https://router.huggingface.co/hf-inference/models/${MODEL}`,
+      "https://router.huggingface.co/hf-inference/models/mistralai/Mistral-7B-Instruct-v0.2",
       {
         method: "POST",
         headers: {
@@ -17,9 +15,10 @@ export async function askAI(prompt: string): Promise<string> {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputs: prompt,
+          inputs: `<s>[INST] ${prompt} [/INST]`,
           parameters: {
-            max_new_tokens: 120
+            max_new_tokens: 120,
+            temperature: 0.7
           }
         }),
       }
@@ -27,12 +26,17 @@ export async function askAI(prompt: string): Promise<string> {
 
     const text = await res.text()
 
+    if (!text) {
+      return "❌ AI tidak merespon"
+    }
+
     let data
+
     try {
       data = JSON.parse(text)
     } catch {
-      console.error("HF RAW:", text)
-      return "❌ AI response bukan JSON"
+      console.error("RAW HF:", text)
+      return "❌ Response bukan JSON"
     }
 
     if (!res.ok) {
